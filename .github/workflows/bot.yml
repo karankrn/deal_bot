@@ -23,17 +23,15 @@ jobs:
 
       - name: Install dependencies
         run: |
-          which python
-          python --version
-          python -m pip install --upgrade pip
-          python -m pip install requests feedparser beautifulsoup4 python-dotenv googlenewsdecoder "selectolax<0.4.0"
+          ${{ env.pythonLocation }}/bin/python -m pip install --upgrade pip
+          ${{ env.pythonLocation }}/bin/python -m pip install -r requirements.txt
 
       - name: Run Telegram Deal Bot
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHANNEL_ID: ${{ secrets.TELEGRAM_CHANNEL_ID }}
           AMAZON_TAG: ${{ secrets.AMAZON_TAG }}
-        run: python bot.py
+        run: ${{ env.pythonLocation }}/bin/python bot.py
 
       - name: Save posted_deals.db state
         run: |
